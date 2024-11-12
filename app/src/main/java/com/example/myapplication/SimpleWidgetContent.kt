@@ -30,7 +30,7 @@ class SimpleWidgetContent : GlanceAppWidget() {
             }
         }
     }
-    
+
     companion object {
         val DestinationKey = ActionParameters.Key<String>("destination")
     }
