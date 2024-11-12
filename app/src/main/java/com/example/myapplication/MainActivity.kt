@@ -16,39 +16,50 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        handleWidgetIntent()
+        val destination = intent.getStringExtra("destination") ?: "main"
 
         setContent {
             MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    when (destination) {
+                        "main" -> MainView(modifier = Modifier.padding(innerPadding))
+                        "second" -> SecondView(modifier = Modifier.padding(innerPadding))
+                        else -> MainView(modifier = Modifier.padding(innerPadding))
+                    }
                 }
             }
-        }
-    }
-
-    private fun handleWidgetIntent() {
-        val widgetIntent = intent
-        if (widgetIntent != null) {
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun MainView(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Bienvenido a la Página Principal",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun SecondView(modifier: Modifier = Modifier) {
+    Text(
+        text = "Bienvenido a la Segunda Vista",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainViewPreview() {
     MyApplicationTheme {
-        Greeting("Android")
+        MainView()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SecondViewPreview() {
+    MyApplicationTheme {
+        SecondView()
     }
 }
