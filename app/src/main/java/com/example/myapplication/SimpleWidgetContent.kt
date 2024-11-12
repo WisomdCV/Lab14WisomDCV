@@ -5,26 +5,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.Button
-import androidx.glance.GlanceId
-import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
+import androidx.glance.*
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.glance.layout.Alignment
-import androidx.glance.layout.Column
-import androidx.glance.layout.Row
-import androidx.glance.layout.Spacer
-import androidx.glance.layout.fillMaxSize
-import androidx.glance.layout.padding
+import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import androidx.glance.Image
+import androidx.glance.action.clickable
 
 class SimpleWidgetContent : GlanceAppWidget() {
 
@@ -45,7 +39,7 @@ class SimpleWidgetContent : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(GlanceTheme.colors.background)
+                .background(ColorProvider(Color.Black))
                 .padding(16.dp),
             verticalAlignment = Alignment.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -55,31 +49,58 @@ class SimpleWidgetContent : GlanceAppWidget() {
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = ColorProvider(Color(0xFF39FF14)) 
+                    color = ColorProvider(Color(0xFF39FF14))
                 ),
                 modifier = GlanceModifier.padding(bottom = 8.dp)
             )
 
             Row(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(
-                    text = "Principal",
-                    modifier = GlanceModifier.padding(8.dp),
-                    onClick = actionStartActivity<MainActivity>(
-                        actionParametersOf(DestinationKey to "main")
+                Column(
+                    modifier = GlanceModifier
+                        .padding(8.dp)
+                        .clickable(
+                            onClick = actionStartActivity<MainActivity>(
+                                actionParametersOf(DestinationKey to "main")
+                            )
+                        ),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        provider = ImageProvider(R.drawable.psyduck),
+                        contentDescription = "Icono de Principal",
+                        modifier = GlanceModifier.size(32.dp)
                     )
-                )
-
-                Spacer(modifier = GlanceModifier.padding(horizontal = 8.dp))
-
-                Button(
-                    text = "Info",
-                    modifier = GlanceModifier.padding(8.dp),
-                    onClick = actionStartActivity<MainActivity>(
-                        actionParametersOf(DestinationKey to "second")
+                    Spacer(modifier = GlanceModifier.height(4.dp))
+                    Text(
+                        text = "Principal",
+                        style = TextStyle(fontSize = 14.sp, color = ColorProvider(Color.White))
                     )
-                )
+                }
+
+                Spacer(modifier = GlanceModifier.width(16.dp))
+
+                Column(
+                    modifier = GlanceModifier
+                        .padding(8.dp)
+                        .clickable(
+                            onClick = actionStartActivity<MainActivity>(
+                                actionParametersOf(DestinationKey to "second")
+                            )
+                        ),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        provider = ImageProvider(R.drawable.ic_launcher_foreground),
+                        contentDescription = "Icono de Info",
+                        modifier = GlanceModifier.size(32.dp)
+                    )
+                    Spacer(modifier = GlanceModifier.height(4.dp))
+                    Text(
+                        text = "Info",
+                        style = TextStyle(fontSize = 14.sp, color = ColorProvider(Color.White))
+                    )
+                }
             }
-
         }
     }
 }
