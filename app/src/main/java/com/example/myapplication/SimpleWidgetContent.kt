@@ -19,6 +19,8 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import androidx.glance.Image
 import androidx.glance.action.clickable
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SimpleWidgetContent : GlanceAppWidget() {
 
@@ -34,6 +36,13 @@ class SimpleWidgetContent : GlanceAppWidget() {
         val DestinationKey = ActionParameters.Key<String>("destination")
     }
 
+    // Función para obtener la hora actual en formato de texto
+    private fun getCurrentTime(): String {
+        val currentTime = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return formatter.format(currentTime)
+    }
+
     @Composable
     private fun CustomWidgetContent() {
         Column(
@@ -44,6 +53,16 @@ class SimpleWidgetContent : GlanceAppWidget() {
             verticalAlignment = Alignment.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Mostrar la hora actual
+            Text(
+                text = "Hora: ${getCurrentTime()}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = ColorProvider(Color.White)
+                ),
+                modifier = GlanceModifier.padding(bottom = 8.dp)
+            )
+
             Text(
                 text = "Accesos Rápidos",
                 style = TextStyle(
